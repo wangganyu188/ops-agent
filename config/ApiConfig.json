@@ -1,0 +1,6 @@
+[{"func":"SendMail.SendMail","url":"SendMail","endpoint":"mailapi"},{"func":"IndexApi.INFO","url":"info","endpoint":"info"},{"func":"AssetsCollection.AssetsMain","url":"Assets","endpoint":"Assets"}]
+
+
+
+
+

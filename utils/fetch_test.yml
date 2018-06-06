@@ -1,0 +1,17 @@
+---
+
+- hosts: "{{host}}"
+  tasks:
+  - name: "Get remote host:[{{host}}]"
+    synchronize:
+      mode: pull
+      src: /data/mongodb
+      dest: "/tmp/{{host}}"
+
+
+#- hosts: "{{host}}"
+#  remote_user: root
+#  gather_facts: True
+#  tasks:
+#    - name: "test"
+#      shell: echo {{host}} > /tmp/aa.log

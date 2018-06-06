@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>OpenNMS Notification</title>
+    <style type="text/css">
+        body {
+            font-family: "Open Sans", "Helvetica", Arial, sans-serif;
+            color: #000000;
+            margin: 5px;
+            background-color: #fff;
+        }
+
+        td {
+            padding: 0.5em;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4c9d29;
+        }
+
+        div.main_title {
+            color: #4c9d29;
+            font-weight: bold;
+            font-size: 16pt;
+            width: 800px;
+        }
+
+        .section {
+            font-weight: bold;
+            height: 30px;
+            width: 100%;
+            font-size: 14pt;
+            background-color: #4c9d29;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .section a {
+            color: white;
+
+        }
+
+        .section a:hover {
+            color: #dddddd;
+        }
+
+        .first_column {
+            width: 130px;
+            font-weight: bold;
+            color: #404040;
+        }
+
+        .second_column {
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .grey_row {
+            background-color: #eeeeec;
+        }
+        .warning_row {
+            background-color: #fdd557;
+        }
+
+        .Critical {
+            background-color: #e45d5b;
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .Major {
+            background-color: #eb8046;
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .Minor {
+            background-color: #f3a336;
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .Warning {
+            background-color: #fdd557;
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .Normal {
+            background-color: #99be74;
+            font-weight: normal;
+            font-size: 11pt;
+        }
+
+        .main_table {
+            width: 800px;
+            padding: 3px;
+            font-size: 11pt;
+            background-color: #fff;
+            table-layout: auto;
+            work-break:break-all;
+        }
+    </style>
+</head>
+<body>
+<div class="main_title">${main_title}</div>
+<br>
+<table border="0" cellspacing="0" cellpadding="0" style="border-bottom:1px; width: 800px;">
+    <tr>
+        <td class="section"> 访问备份图片汇总结果:</td>
+    </tr>
+</table>
+<br>
+
+<table border="0" cellspacing="1" cellpadding="0" class="main_table">
+    <tr>
+        <td class="first_column">总数量:</td>
+        <td class="second_column">${total_num}</td>
+    </tr>
+    <tr>
+        <td class="first_column">请求成功数量:</td>
+        <td class="second_column">${okcount['oknum']}</td>
+    </tr>
+    <tr>
+        <td class="first_column">请求失败数量:</td>
+        <td class="second_column">${errocount['erronum']}</td>
+    </tr>
+    <tr>
+        <td class="first_column">说明:</td>
+        <td class="second_column"><font color="#cc0000">每天从备份图片中随机选${total_num}个图片地址请求是否可正常访问,确认是否备份成功</font></td>
+    </tr>
+
+</table>
+
+<br>
+<table border="0" cellspacing="0" cellpadding="0" style="border-bottom:1px; width: 100%;">
+    <tr>
+        <td class="section">请求失败数为[${errocount['erronum']}]明细如下:</td>
+    </tr>
+</table>
+<br>
+
+%if len(errocount["errorlist"]) != 0:
+<table border="0" cellspacing="1" cellpadding="0" class="main_table">
+    <tr>
+        <th>请求状态</th>
+        <th>请求时间</th>
+        <th>图片地址</th>
+    </tr>
+    %for imgerror in errocount["errorlist"]:
+    <tr class="warning_row">
+        <td class="second_column">${imgerror['status']}</td>
+        <td class="second_column">${imgerror['request_time']}</td>
+        <td class="second_column">${imgerror['url']}</td>
+    </tr>
+    %endfor
+</table>
+%else:
+<table border="0" cellspacing="1" cellpadding="0" class="main_table">
+    <tr>
+        <td>没有请求失败的图片地址</td>
+    </tr>
+
+</table>
+%endif
+</body>
+</html>
